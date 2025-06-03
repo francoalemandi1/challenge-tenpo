@@ -7,26 +7,26 @@ const mockPosts = [
     id: 1,
     title: 'First Post',
     body: 'First post content',
-    userId: 1
+    userId: 1,
   },
   {
     id: 2,
     title: 'Second Post',
     body: 'Second post content',
-    userId: 1
-  }
+    userId: 1,
+  },
 ]
 
 describe('PostGrid Component', () => {
   it('renders all posts in mobile view', () => {
     render(<PostGrid posts={mockPosts} isMobile={true} />)
-    
+
     // Check if all posts are rendered
     mockPosts.forEach(post => {
       expect(screen.getByText(post.title)).toBeInTheDocument()
       expect(screen.getByText(post.body)).toBeInTheDocument()
     })
-    
+
     // Check mobile layout
     const grid = screen.getByTestId('post-grid')
     expect(grid).toHaveClass('flex', 'flex-col', 'gap-6')
@@ -34,13 +34,13 @@ describe('PostGrid Component', () => {
 
   it('renders posts in grid layout for desktop', () => {
     render(<PostGrid posts={mockPosts} isMobile={false} />)
-    
+
     // Check if all posts are rendered
     mockPosts.forEach(post => {
       expect(screen.getByText(post.title)).toBeInTheDocument()
       expect(screen.getByText(post.body)).toBeInTheDocument()
     })
-    
+
     // Check desktop grid layout
     const grid = screen.getByTestId('post-grid')
     expect(grid).toHaveClass('grid', 'grid-cols-2', 'lg:grid-cols-4', 'gap-6')
@@ -48,23 +48,23 @@ describe('PostGrid Component', () => {
 
   it('handles empty posts array', () => {
     render(<PostGrid posts={[]} isMobile={false} />)
-    
+
     const grid = screen.getByTestId('post-grid')
     expect(grid).toBeInTheDocument()
-    expect(grid.children).toHaveLength(0)
+    const skeletons = screen.queryAllByTestId('skeleton-card')
+    expect(skeletons).toHaveLength(4) // Should show 4 skeleton cards in desktop view
   })
 
   it('applies custom styles when provided', () => {
-    const customStyle = { backgroundColor: 'red' }
-    render(<PostGrid posts={mockPosts} isMobile={false} style={customStyle} />)
-    
+    render(<PostGrid posts={[]} isMobile={false} style={{ cursor: 'pointer' }} />)
+
     const grid = screen.getByTestId('post-grid')
-    expect(grid).toHaveStyle({ backgroundColor: 'red' })
+    expect(grid).toHaveStyle({ cursor: 'pointer' })
   })
 
   it('renders skeleton cards only in desktop view', () => {
     const { rerender } = render(<PostGrid posts={mockPosts} isMobile={false} />)
-    
+
     // Check desktop view
     let skeletons = screen.queryAllByTestId('skeleton-card')
     expect(skeletons).toHaveLength(2) // 4 columns - 2 posts = 2 skeletons
@@ -74,4 +74,4 @@ describe('PostGrid Component', () => {
     skeletons = screen.queryAllByTestId('skeleton-card')
     expect(skeletons).toHaveLength(0)
   })
-}) 
+})

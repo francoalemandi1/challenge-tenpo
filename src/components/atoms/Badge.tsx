@@ -1,12 +1,16 @@
-interface BadgeProps {
-  children: React.ReactNode;
-  className?: string;
+interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
+  children: React.ReactNode
+  className?: string
 }
 
-export function Badge({ children, className = '' }: BadgeProps) {
+export const Badge = ({ children, className = '', ...props }: BadgeProps) => {
   return (
-    <span className={`text-sm font-medium bg-gray-100 text-gray-700 px-2 py-0.5 rounded ${className}`}>
+    <span
+      role="status"
+      className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors ${className}`}
+      {...props}
+    >
       {children}
     </span>
-  );
-} 
+  )
+}
