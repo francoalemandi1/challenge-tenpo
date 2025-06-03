@@ -58,7 +58,7 @@ export function DashboardTemplate({
           <div className="flex justify-between items-center">
             <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Dashboard</h1>
             <Button onClick={onLogout} variant="outline" size="sm">
-              Sign outt
+              Sign out
             </Button>
           </div>
         </div>
