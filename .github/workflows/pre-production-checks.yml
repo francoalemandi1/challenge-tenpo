@@ -1,0 +1,75 @@
+name: Pre Production Checks
+
+on:
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - '*.md'
+      - '.gitignore'
+      - '.editorconfig'
+      - 'LICENSE'
+
+jobs:
+  validate:
+    name: Validate Code Quality
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Check Types
+        run: npm run typecheck
+
+      - name: Build Project
+        run: npm run build
+
+      - name: Run Tests
+        run: npm run test
+
+      - name: Check Code Format
+        run: npm run format:check
+
+      - name: Run Security Audit
+        run: npm audit --audit-level=moderate
+
+      - name: Build Storybook
+        run: npm run build-storybook --quiet
+
+  chromatic:
+    name: Visual Testing
+    runs-on: ubuntu-latest
+    needs: validate
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Publish to Chromatic
+        uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          exitOnceUploaded: true 
