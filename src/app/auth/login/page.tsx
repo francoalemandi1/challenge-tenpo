@@ -64,7 +64,11 @@ export default function LoginPage() {
               )}
             </div>
             {error && <div className="text-center text-red-500 text-sm">{error}</div>}
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
+            <Button
+              type="submit"
+              className="w-full bg-black text-white hover:bg-gray-800 transition-colors duration-200"
+              disabled={isSubmitting}
+            >
               {isSubmitting ? 'Signing in...' : 'Sign in'}
             </Button>
           </form>
