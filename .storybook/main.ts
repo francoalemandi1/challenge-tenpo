@@ -2,6 +2,12 @@ import type { StorybookConfig } from '@storybook/nextjs'
 import path from 'path'
 import type { RuleSetRule } from 'webpack'
 
+interface PostcssLoaderOptions {
+  postcssOptions: {
+    config: string
+  }
+}
+
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
@@ -11,13 +17,17 @@ const config: StorybookConfig = {
   ],
   framework: {
     name: '@storybook/nextjs',
-    options: {},
+    options: {
+      builder: {
+        useSWC: true,
+      },
+    },
   },
   staticDirs: ['../public'],
-  core: {
-    builder: '@storybook/builder-webpack5',
+  docs: {
+    autodocs: true,
   },
-  webpackFinal: async (config) => {
+  webpackFinal: async config => {
     if (config.resolve) {
       config.resolve.alias = {
         ...config.resolve.alias,
@@ -27,30 +37,27 @@ const config: StorybookConfig = {
 
     // Configuración para PostCSS y Tailwind
     if (config.module?.rules) {
-      const cssRule = config.module.rules.find(
-        (rule): rule is RuleSetRule => 
-          rule !== '...' && 
-          typeof rule !== 'string' && 
-          rule !== false && 
-          rule !== '' && 
-          rule !== 0 &&
-          rule.test instanceof RegExp && 
-          rule.test.toString().includes('css')
-      )
+      const rules = config.module.rules as RuleSetRule[]
+      const cssRule = rules.find(rule => rule.test instanceof RegExp && rule.test.test('.css'))
 
-      if (cssRule) {
-        cssRule.use = [
-          'style-loader',
-          'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              postcssOptions: {
-                config: path.resolve(__dirname, './postcss.config.js'),
-              },
+      if (cssRule && cssRule.use && Array.isArray(cssRule.use)) {
+        const postcssLoader = cssRule.use.find(
+          (loader): loader is { loader: string; options: PostcssLoaderOptions } =>
+            typeof loader === 'object' &&
+            loader !== null &&
+            'loader' in loader &&
+            typeof loader.loader === 'string' &&
+            loader.loader.includes('postcss-loader')
+        )
+
+        if (postcssLoader) {
+          postcssLoader.options = {
+            ...postcssLoader.options,
+            postcssOptions: {
+              config: path.resolve(__dirname, './postcss.config.js'),
             },
-          },
-        ]
+          }
+        }
       }
     }
 

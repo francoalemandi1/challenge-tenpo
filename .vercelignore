@@ -1,0 +1,13 @@
+.git
+.github
+.husky
+.storybook
+__tests__
+**/*.test.*
+**/*.spec.*
+README.md
+.gitignore
+.eslintrc.json
+.prettierrc
+jest.config.js
+jest.setup.js 

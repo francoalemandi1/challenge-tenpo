@@ -1,5 +1,5 @@
 import React from 'react'
-import type { Preview } from '@storybook/nextjs'
+import type { Preview } from '@storybook/react'
 import '../src/app/globals.css'
 
 const preview: Preview = {
@@ -30,7 +30,7 @@ const preview: Preview = {
     },
   },
   decorators: [
-    (Story) => (
+    Story => (
       <div className="p-4">
         <Story />
       </div>
@@ -38,4 +38,4 @@ const preview: Preview = {
   ],
 }
 
-export default preview 
+export default preview
