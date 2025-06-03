@@ -1,13 +1,13 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardTitle } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardTitle } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
 
 interface DashboardTemplateProps {
-  children: React.ReactNode;
-  onLogout: () => void;
-  isLoading?: boolean;
-  isError?: boolean;
-  onRetry?: () => void;
+  children: React.ReactNode
+  onLogout: () => void
+  isLoading?: boolean
+  isError?: boolean
+  onRetry?: () => void
 }
 
 export function DashboardTemplate({
@@ -15,7 +15,7 @@ export function DashboardTemplate({
   onLogout,
   isLoading,
   isError,
-  onRetry
+  onRetry,
 }: DashboardTemplateProps) {
   if (isLoading) {
     return (
@@ -33,7 +33,7 @@ export function DashboardTemplate({
           ))}
         </div>
       </div>
-    );
+    )
   }
 
   if (isError) {
@@ -41,18 +41,14 @@ export function DashboardTemplate({
       <div className="min-h-screen flex items-center justify-center p-4">
         <Card className="w-full max-w-md">
           <CardContent className="p-6">
-            <CardTitle className="text-red-600 mb-4 text-center">
-              Error loading posts
-            </CardTitle>
+            <CardTitle className="text-red-600 mb-4 text-center">Error loading posts</CardTitle>
             <div className="flex justify-center">
-              <Button onClick={onRetry}>
-                Retry
-              </Button>
+              <Button onClick={onRetry}>Retry</Button>
             </div>
           </CardContent>
         </Card>
       </div>
-    );
+    )
   }
 
   return (
@@ -60,18 +56,14 @@ export function DashboardTemplate({
       <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="sticky top-0 z-10 bg-gray-50 py-4 mb-4">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
-              Dashboard
-            </h1>
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Dashboard</h1>
             <Button onClick={onLogout} variant="outline" size="sm">
-              Sign out
+              Sign outt
             </Button>
           </div>
         </div>
-        <div className="h-[calc(100vh-100px)]">
-          {children}
-        </div>
+        <div className="h-[calc(100vh-100px)]">{children}</div>
       </div>
     </div>
-  );
-} 
+  )
+}
