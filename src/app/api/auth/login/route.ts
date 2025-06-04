@@ -4,14 +4,11 @@ import { generateToken, COOKIE_NAME } from '@/lib/auth'
 
 export async function POST(request: Request) {
   try {
-    console.log('🚀 Login attempt started')
     const body = await request.json()
-    console.log('📝 Request body:', { email: body.email })
 
     // Validate request body against schema
     const result = loginSchema.safeParse(body)
     if (!result.success) {
-      console.log('❌ Validation failed:', result.error.errors)
       return NextResponse.json(
         {
           error: 'Invalid credentials format',
@@ -22,12 +19,10 @@ export async function POST(request: Request) {
     }
 
     const { email, password } = result.data
-    console.log('✅ Validation passed')
 
     // In a real app, you would validate credentials against a database
     // For demo purposes, accept any valid email with password longer than 6 chars
     if (password.length < 6) {
-      console.log('❌ Password too short')
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
 
@@ -37,7 +32,6 @@ export async function POST(request: Request) {
       email,
       role: 'user',
     })
-    console.log('🔑 Token generated')
 
     // Create response
     const response = NextResponse.json(
@@ -62,11 +56,9 @@ export async function POST(request: Request) {
       path: '/',
       maxAge: 24 * 60 * 60, // 24 hours in seconds
     })
-    console.log('🍪 Cookie set:', COOKIE_NAME)
 
     return response
-  } catch (error) {
-    console.error('❌ Login error:', error)
+  } catch {
     return NextResponse.json({ error: 'Authentication failed' }, { status: 401 })
   }
 }
