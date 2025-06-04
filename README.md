@@ -29,6 +29,14 @@ Este proyecto es una aplicación web moderna construida con Next.js que implemen
 - npm o yarn
 - Git
 
+## Importante
+
+El sistema cuenta CI/CD, por lo que ya está desplegado en:
+
+https://challenge-tenpo.vercel.app/auth/login
+
+Cada merge o push a main deploya automáticamente. 
+
 ## 🚀 Instalación
 
 1. Clonar el repositorio:
