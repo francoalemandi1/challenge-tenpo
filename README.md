@@ -135,39 +135,3 @@ component/
 └── __stories__/
     └── Component.stories.tsx
 ```
-
-## 📚 Documentación de Componentes
-
-Utilizamos Storybook para documentar nuestros componentes. Cada componente tiene su archivo `.stories.tsx` correspondiente que muestra sus diferentes estados y variantes.
-
-## 🔒 Autenticación
-
-El sistema de autenticación utiliza JWT con refresh tokens. Las rutas protegidas están manejadas por el middleware de Next.js.
-
-## 🌐 API Endpoints
-
-- `POST /api/auth/login` - Iniciar sesión
-- `POST /api/auth/refresh` - Refrescar token
-- `GET /api/auth/check` - Verificar autenticación
-
-## 🤝 Contribución
-
-1. Fork el proyecto
-2. Crear una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'feat: Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abrir un Pull Request
-
-## 📝 Convenciones de Código
-
-- Utilizamos ESLint y Prettier para mantener un código consistente
-- Seguimos las convenciones de Conventional Commits para los mensajes de commit
-- Los componentes están organizados siguiendo la metodología Atomic Design
-
-## 🐛 Reporte de Bugs
-
-Si encuentras un bug, por favor abre un issue describiendo el problema y cómo reproducirlo.
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.md) para más detalles.
