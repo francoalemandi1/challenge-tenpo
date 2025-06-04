@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { authService } from './auth'
+import { redirect } from 'next/navigation'
 
 if (!process.env.NEXT_PUBLIC_API_URL) {
   throw new Error('NEXT_PUBLIC_API_URL environment variable is not defined')
@@ -7,7 +8,7 @@ if (!process.env.NEXT_PUBLIC_API_URL) {
 
 // Create an axios instance
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: '/api',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -22,12 +23,13 @@ api.interceptors.request.use(config => {
   return config
 })
 
-// Response interceptor for error handling
+// Add response interceptor for error handling
 api.interceptors.response.use(
   response => response,
   error => {
     if (error.response?.status === 401) {
-      authService.logout()
+      // Redirect to login on 401 responses
+      redirect('/auth/login')
     }
     return Promise.reject(error)
   }
@@ -69,7 +71,7 @@ export const apiService = {
     }
 
     try {
-      // Get all 100 base posts
+      // Get posts through our API route
       const response = await api.get<Post[]>('/posts')
       const basePosts = response.data
 
