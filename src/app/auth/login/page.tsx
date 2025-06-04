@@ -1,33 +1,23 @@
 'use client'
 
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { loginSchema, type LoginCredentials } from '@/types/auth'
 import { useAuth } from '@/hooks/useAuth'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { useFormWithValidation } from '@/hooks/useFormWithValidation'
 
 export default function LoginPage() {
   const { login } = useAuth()
-  const [error, setError] = useState<string | null>(null)
-
   const {
     register,
     handleSubmit,
+    error,
     formState: { errors, isSubmitting },
-  } = useForm<LoginCredentials>({
-    resolver: zodResolver(loginSchema),
-  })
+  } = useFormWithValidation<LoginCredentials>(loginSchema)
 
   const onSubmit = async (data: LoginCredentials) => {
-    try {
-      setError(null)
-      await login(data)
-    } catch {
-      setError('Invalid credentials')
-    }
+    await login(data)
   }
 
   return (

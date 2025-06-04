@@ -8,7 +8,22 @@ interface PostGridProps {
   style?: CSSProperties
 }
 
-export const PostGrid = ({ posts, isMobile, style }: PostGridProps) => {
+const Skeleton = () => (
+  <div
+    data-testid="skeleton-card"
+    className="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm h-[250px]"
+    data-slot="card"
+  >
+    <div className="h-full flex flex-col p-4" data-slot="card-content">
+      <div className="space-y-3">
+        <div className="animate-pulse rounded-md bg-muted h-6 w-3/4" />
+        <div className="animate-pulse rounded-md bg-muted h-24 w-full" />
+      </div>
+    </div>
+  </div>
+)
+
+const PostGridComponent = ({ posts, isMobile, style }: PostGridProps) => {
   const gridClassName = isMobile ? 'flex flex-col gap-6' : 'grid grid-cols-2 lg:grid-cols-4 gap-6'
 
   const skeletonCount = isMobile ? 0 : Math.max(0, 4 - posts.length)
@@ -26,20 +41,12 @@ export const PostGrid = ({ posts, isMobile, style }: PostGridProps) => {
         />
       ))}
       {skeletons.map((_, index) => (
-        <div
-          key={`skeleton-${index}`}
-          data-testid="skeleton-card"
-          className="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm h-[250px]"
-          data-slot="card"
-        >
-          <div className="h-full flex flex-col p-4" data-slot="card-content">
-            <div className="space-y-3">
-              <div className="animate-pulse rounded-md bg-muted h-6 w-3/4" />
-              <div className="animate-pulse rounded-md bg-muted h-24 w-full" />
-            </div>
-          </div>
-        </div>
+        <Skeleton key={`skeleton-${index}`} />
       ))}
     </div>
   )
 }
+
+export const PostGrid = Object.assign(PostGridComponent, {
+  Skeleton,
+})

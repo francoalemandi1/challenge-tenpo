@@ -2,6 +2,9 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { ErrorLayout } from '@/components/layouts/ErrorLayout'
+import { getErrorMessage } from '@/lib/errors'
+import { ROUTES } from '@/config/routes'
 
 interface ErrorProps {
   error: Error & { digest?: string; statusCode?: number }
@@ -17,24 +20,10 @@ export default function Error({ error, reset }: ErrorProps) {
     console.error('Error caught by error.tsx:', error)
   }, [error])
 
-  const getErrorMessage = () => {
-    switch (statusCode) {
-      case 400:
-        return 'Bad Request - The request could not be understood or was missing required parameters.'
-      case 401:
-        return 'Unauthorized - Authentication failed or user lacks necessary permissions.'
-      case 404:
-        return 'Not Found - The requested resource could not be found.'
-      case 500:
-      default:
-        return 'Internal Server Error - Something went wrong on our end.'
-    }
-  }
-
   const handleAction = () => {
     switch (statusCode) {
       case 401:
-        router.push('/auth/login')
+        router.push(ROUTES.public.login)
         break
       case 404:
         router.push('/')
@@ -56,22 +45,12 @@ export default function Error({ error, reset }: ErrorProps) {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8 text-center">
-        <div className="mb-6">
-          <h1 className="text-6xl font-bold text-red-500 mb-4">{statusCode}</h1>
-          <p className="text-xl text-gray-700 mb-4">{getErrorMessage()}</p>
-          <p className="text-sm text-gray-500">{error.message}</p>
-          {error.digest && <p className="text-xs text-gray-400 mt-2">Error ID: {error.digest}</p>}
-        </div>
-
-        <button
-          onClick={handleAction}
-          className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-        >
-          {getActionText()}
-        </button>
-      </div>
-    </div>
+    <ErrorLayout
+      title={`Error ${statusCode}`}
+      message={getErrorMessage(statusCode)}
+      actionText={getActionText()}
+      onAction={handleAction}
+      error={error}
+    />
   )
 }
