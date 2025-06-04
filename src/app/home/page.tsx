@@ -10,7 +10,7 @@ import { BaseLayout } from '@/components/layouts/BaseLayout'
 import { Button } from '@/components/atoms/Button'
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll'
 
-export default function Dashboard() {
+export default function Home() {
   const { logout } = useAuth()
 
   const query = useInfiniteQuery<PaginatedResponse<Post>, Error>({
@@ -31,7 +31,7 @@ export default function Dashboard() {
 
   const header = (
     <div className="flex justify-between items-center">
-      <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Dashboard</h1>
+      <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Home</h1>
       <Button onClick={logout} variant="outline" size="sm">
         Sign out
       </Button>

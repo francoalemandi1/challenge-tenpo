@@ -2,7 +2,7 @@ import { Button } from '@/components/atoms/Button'
 import { Card, CardContent, CardTitle } from '@/components/atoms/Card'
 import { Skeleton } from '@/components/atoms/Skeleton'
 
-interface DashboardTemplateProps {
+interface HomeTemplateProps {
   children: React.ReactNode
   onLogout: () => void
   isLoading?: boolean
@@ -10,13 +10,13 @@ interface DashboardTemplateProps {
   onRetry?: () => void
 }
 
-export function DashboardTemplate({
+export function HomeTemplate({
   children,
   onLogout,
   isLoading,
   isError,
   onRetry,
-}: DashboardTemplateProps) {
+}: HomeTemplateProps) {
   if (isLoading) {
     return (
       <div className="min-h-screen p-4 md:p-6">
@@ -56,7 +56,7 @@ export function DashboardTemplate({
       <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="sticky top-0 z-10 bg-gray-50 py-4 mb-4">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Dashboard</h1>
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Home</h1>
             <Button onClick={onLogout} variant="outline" size="sm">
               Sign out
             </Button>

@@ -16,7 +16,7 @@ export function middleware(request: NextRequest) {
   // Handle root path and empty path - redirect to login if not authenticated
   if (pathname === '/' || pathname === '') {
     if (isAuthenticated) {
-      return NextResponse.redirect(new URL(ROUTES.private.dashboard, request.url))
+      return NextResponse.redirect(new URL(ROUTES.private.home, request.url))
     }
     return NextResponse.redirect(new URL(ROUTES.public.login, request.url))
   }
@@ -24,13 +24,13 @@ export function middleware(request: NextRequest) {
   // Handle public routes (login, register, etc)
   if (pathname.startsWith('/auth')) {
     if (isAuthenticated) {
-      return NextResponse.redirect(new URL(ROUTES.private.dashboard, request.url))
+      return NextResponse.redirect(new URL(ROUTES.private.home, request.url))
     }
     return NextResponse.next()
   }
 
-  // Handle protected routes (dashboard, profile, etc)
-  if (pathname.startsWith('/dashboard')) {
+  // Handle protected routes (home, profile, etc)
+  if (pathname.startsWith(ROUTES.private.home)) {
     if (!isAuthenticated) {
       return NextResponse.redirect(new URL(ROUTES.public.login, request.url))
     }

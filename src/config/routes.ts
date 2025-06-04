@@ -5,7 +5,7 @@ export const ROUTES = {
     forgotPassword: '/auth/forgot-password',
   },
   private: {
-    dashboard: '/dashboard',
+    home: '/home',
     profile: '/profile',
     settings: '/settings',
   },

@@ -1,23 +1,23 @@
 import { redirect } from 'next/navigation'
 import jwt from 'jsonwebtoken'
 import { cookies } from 'next/headers'
-import { isPrivateRoute, isPublicRoute } from '@/config/routes'
+import { isPrivateRoute, isPublicRoute, ROUTES } from '@/config/routes'
 
 // Define public and private routes
-export const PUBLIC_ROUTES = ['/auth/login', '/auth/register', '/auth/forgot-password']
+export const PUBLIC_ROUTES = [ROUTES.public.login]
 
-export const PRIVATE_ROUTES = ['/dashboard', '/profile', '/settings']
+export const PRIVATE_ROUTES = [ROUTES.private.home]
 
 // Authentication state management
 export function requireAuth(path: string) {
   const isAuthenticated = document.cookie.includes('auth_token=')
 
   if (!isAuthenticated && isPrivateRoute(path)) {
-    redirect('/auth/login')
+    redirect(ROUTES.public.login)
   }
 
   if (isAuthenticated && isPublicRoute(path)) {
-    redirect('/dashboard')
+    redirect(ROUTES.private.home)
   }
 }
 

@@ -5,6 +5,7 @@ import { AuthState, LoginCredentials } from '@/types/auth'
 import { authService } from '@/services/auth'
 import { useRouter } from 'next/navigation'
 import { StateCreator } from 'zustand'
+import { ROUTES } from '@/config/routes'
 
 interface AuthStore extends AuthState {
   login: (credentials: LoginCredentials) => Promise<void>
@@ -50,7 +51,7 @@ export function useAuth() {
     try {
       await authStore.login(credentials)
       // Redirigir después de un login exitoso
-      window.location.href = '/dashboard'
+      window.location.href = ROUTES.private.home
     } catch (error) {
       throw error
     }
@@ -58,7 +59,7 @@ export function useAuth() {
 
   const logout = async () => {
     await authStore.logout()
-    router.replace('/auth/login')
+    router.replace(ROUTES.public.login)
   }
 
   return {

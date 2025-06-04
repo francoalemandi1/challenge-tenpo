@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { ErrorLayout } from '@/components/layouts/ErrorLayout'
 import { ROUTES } from '@/config/routes'
 
-export default function DashboardError({
+export default function HomeError({
   error,
   reset,
 }: {
@@ -24,11 +24,11 @@ export default function DashboardError({
 
   return (
     <ErrorLayout
-      title="Dashboard Error"
+      title="Home Error"
       message={
         statusCode === 401
           ? 'Your session has expired. Please log in again.'
-          : "We couldn't load your dashboard. Please try again."
+          : "We couldn't load your Home. Please try again."
       }
       actionText={statusCode === 401 ? 'Go to Login' : 'Try Again'}
       onAction={handleAction}
