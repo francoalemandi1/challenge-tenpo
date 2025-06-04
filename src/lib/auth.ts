@@ -29,7 +29,7 @@ export type RouteConfig = {
 }
 
 // JWT configuration
-export const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'
+export const JWT_SECRET = process.env.JWT_SECRET as string
 export const COOKIE_NAME = 'auth_token'
 
 // Token utilities
