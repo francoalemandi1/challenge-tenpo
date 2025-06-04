@@ -1,27 +1,21 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import QueryProvider from "@/providers/query-provider";
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import './globals.css'
+import QueryProvider from '@/providers/query-provider'
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: "Tenpo Challenge",
-  description: "A modern web application built with Next.js and TypeScript",
-};
+  title: 'Challenge Tenpo',
+  description: 'A Next.js application for Tenpo challenge',
+}
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <QueryProvider>
-          <main>{children}</main>
-        </QueryProvider>
+        <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
-  );
+  )
 }
