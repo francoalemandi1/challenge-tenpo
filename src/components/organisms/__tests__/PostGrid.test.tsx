@@ -19,7 +19,7 @@ const mockPosts = [
 
 describe('PostGrid Component', () => {
   it('renders all posts in mobile view', () => {
-    render(<PostGrid posts={mockPosts} isMobile={true} />)
+    render(<PostGrid.Root posts={mockPosts} isMobile={true} />)
 
     // Check if all posts are rendered
     mockPosts.forEach(post => {
@@ -33,7 +33,7 @@ describe('PostGrid Component', () => {
   })
 
   it('renders posts in grid layout for desktop', () => {
-    render(<PostGrid posts={mockPosts} isMobile={false} />)
+    render(<PostGrid.Root posts={mockPosts} isMobile={false} />)
 
     // Check if all posts are rendered
     mockPosts.forEach(post => {
@@ -47,7 +47,7 @@ describe('PostGrid Component', () => {
   })
 
   it('handles empty posts array', () => {
-    render(<PostGrid posts={[]} isMobile={false} />)
+    render(<PostGrid.Root posts={[]} isMobile={false} />)
 
     const grid = screen.getByTestId('post-grid')
     expect(grid).toBeInTheDocument()
@@ -56,22 +56,37 @@ describe('PostGrid Component', () => {
   })
 
   it('applies custom styles when provided', () => {
-    render(<PostGrid posts={[]} isMobile={false} style={{ cursor: 'pointer' }} />)
+    render(<PostGrid.Root posts={[]} isMobile={false} style={{ cursor: 'pointer' }} />)
 
     const grid = screen.getByTestId('post-grid')
     expect(grid).toHaveStyle({ cursor: 'pointer' })
   })
 
   it('renders skeleton cards only in desktop view', () => {
-    const { rerender } = render(<PostGrid posts={mockPosts} isMobile={false} />)
+    const { rerender } = render(<PostGrid.Root posts={mockPosts} isMobile={false} />)
 
     // Check desktop view
     let skeletons = screen.queryAllByTestId('skeleton-card')
     expect(skeletons).toHaveLength(2) // 4 columns - 2 posts = 2 skeletons
 
     // Check mobile view
-    rerender(<PostGrid posts={mockPosts} isMobile={true} />)
+    rerender(<PostGrid.Root posts={mockPosts} isMobile={true} />)
     skeletons = screen.queryAllByTestId('skeleton-card')
     expect(skeletons).toHaveLength(0)
+  })
+
+  describe('PostGrid.Skeleton', () => {
+    it('renders with correct structure', () => {
+      render(<PostGrid.Skeleton />)
+
+      const skeleton = screen.getByTestId('skeleton-card')
+      expect(skeleton).toBeInTheDocument()
+
+      const contentContainer = skeleton.querySelector('[data-slot="card-content"]')
+      expect(contentContainer).toBeInTheDocument()
+
+      const pulseElements = document.getElementsByClassName('animate-pulse')
+      expect(pulseElements.length).toBe(2) // Title and body placeholders
+    })
   })
 })

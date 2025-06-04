@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { ErrorLayout } from '@/components/layouts/ErrorLayout'
 import { ROUTES } from '@/config/routes'
@@ -14,10 +13,6 @@ export default function DashboardError({
 }) {
   const router = useRouter()
   const statusCode = error.statusCode || 500
-
-  useEffect(() => {
-    console.error('Dashboard error:', error)
-  }, [error])
 
   const handleAction = () => {
     if (statusCode === 401) {

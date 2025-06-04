@@ -1,6 +1,6 @@
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardTitle } from '@/components/ui/card'
-import { Skeleton } from '@/components/ui/skeleton'
+import { Button } from '@/components/atoms/Button'
+import { Card, CardContent, CardTitle } from '@/components/atoms/Card'
+import { Skeleton } from '@/components/atoms/Skeleton'
 
 interface DashboardTemplateProps {
   children: React.ReactNode

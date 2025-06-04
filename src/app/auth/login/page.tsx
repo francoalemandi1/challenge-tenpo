@@ -2,9 +2,9 @@
 
 import { loginSchema, type LoginCredentials } from '@/types/auth'
 import { useAuth } from '@/hooks/useAuth'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/atoms/Button'
+import { Input } from '@/components/atoms/Input'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/atoms/Card'
 import { useFormWithValidation } from '@/hooks/useFormWithValidation'
 
 export default function LoginPage() {

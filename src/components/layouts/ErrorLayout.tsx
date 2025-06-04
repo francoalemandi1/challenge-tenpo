@@ -13,8 +13,10 @@ export function ErrorLayout({ title, message, actionText, onAction, error }: Err
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-red-500 mb-4">{title}</h2>
           <p className="text-gray-700 mb-4">{message}</p>
-          {error && <p className="text-sm text-gray-500">{error.message}</p>}
-          {error?.digest && <p className="text-xs text-gray-400 mt-2">Error ID: {error.digest}</p>}
+          {error ? <p className="text-sm text-gray-500">{error.message}</p> : null}
+          {error?.digest ? (
+            <p className="text-xs text-gray-400 mt-2">Error ID: {error.digest}</p>
+          ) : null}
         </div>
 
         <button

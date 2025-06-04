@@ -24,7 +24,7 @@ const mockPosts = [
 
 const meta = {
   title: 'Organisms/PostGrid',
-  component: PostGrid,
+  component: PostGrid.Root,
   parameters: {
     layout: 'padded',
   },
@@ -43,7 +43,7 @@ const meta = {
       description: 'Additional CSS styles',
     },
   },
-} satisfies Meta<typeof PostGrid>
+} satisfies Meta<typeof PostGrid.Root>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -85,4 +85,23 @@ export const WithCustomStyles: Story = {
       padding: '2rem',
     },
   },
-} 
+}
+
+// Skeleton stories
+export const SkeletonStory: StoryObj = {
+  name: 'Skeleton',
+  render: () => <PostGrid.Skeleton />,
+  args: {},
+}
+
+export const SkeletonGrid: StoryObj = {
+  name: 'Skeleton Grid',
+  render: () => (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {[...Array(4)].map((_, i) => (
+        <PostGrid.Skeleton key={i} />
+      ))}
+    </div>
+  ),
+  args: {},
+}

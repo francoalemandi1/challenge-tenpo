@@ -7,7 +7,7 @@ import { useAuth } from '@/hooks/useAuth'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { PostGrid } from '@/components/organisms/PostGrid'
 import { BaseLayout } from '@/components/layouts/BaseLayout'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/atoms/Button'
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll'
 
 export default function Dashboard() {
@@ -81,7 +81,9 @@ export default function Dashboard() {
                   const rowPosts = posts.slice(startIdx, startIdx + 4)
                   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
 
-                  return <PostGrid key={key} posts={rowPosts} isMobile={isMobile} style={style} />
+                  return (
+                    <PostGrid.Root key={key} posts={rowPosts} isMobile={isMobile} style={style} />
+                  )
                 }}
                 onRowsRendered={onRowsRendered}
                 overscanRowCount={3}
